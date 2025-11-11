@@ -1,0 +1,28 @@
+services:
+  - name: finance-backend
+    type: web
+    runtime: node
+    rootDir: backend
+    buildCommand: npm install
+    startCommand: node src/server.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        sync: true
+      - key: PORT
+        value: 3000
+
+  - name: finance-bot
+    type: worker
+    runtime: node
+    rootDir: bot
+    buildCommand: npm install
+    startCommand: node src/bot.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: TELEGRAM_TOKKEN
+        sync: true
+      - key: GEMINI_API_KEY
+        sync: true

@@ -1,0 +1,13 @@
+{
+  "name": "finance-monorepo",
+  "private": true,
+  "scripts": {
+    "start": "concurrently \"npm run start:backend --prefix backend\" \"npm run start:bot --prefix bot\"",
+    "start:backend": "npm run start --prefix backend",
+    "start:bot": "npm run start --prefix bot",
+    "install:all": "npm install && npm install --prefix backend && npm install --prefix bot"
+  },
+  "dependencies": {
+    "concurrently": "^9.1.0"
+  }
+}
