@@ -1,36 +1,16 @@
-envVarGroups:
-  - name: finance-envs
-    envVars:
-      - key: DATABASE_URL
-        value: "postgresql://postgres.mqnmjwtqcbowjzxsbcsp:Sant0s+12@aws-1-sa-east-1.pooler.supabase.com:5432/postgres"
-      - key: TELEGRAM_TOKKEN
-        value: "8371436436:AAG0EJm5T472qfajYE3D9AvPPer-b8W9WCE"
-      - key: GEMINI_API_KEY
-        value: "AIzaSyCTikjBWtrzpNQLjZDs-KpKfr9iQDWm8h0"
-
 services:
   - name: finance-backend
     type: web
     runtime: node
     rootDir: backend
-    buildCommand: npm install
+    buildCommand: |
+      npm install
+      npx prisma generate
     startCommand: node src/server.js
     envVars:
-      - fromGroup: finance-envs
       - key: NODE_ENV
         value: production
+      - key: DATABASE_URL
+        sync: true
       - key: PORT
         value: 3000
-
-  - name: finance-bot
-    type: worker
-    runtime: node
-    rootDir: bot
-    buildCommand: npm install
-    startCommand: node src/bot.js
-    envVars:
-      - fromGroup: finance-envs
-      - key: NODE_ENV
-        value: production
-      - key: BACKEND_API_URL
-        value: "https://finance-backend.onrender.com"
