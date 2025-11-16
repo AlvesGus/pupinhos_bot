@@ -15,7 +15,7 @@ model Transaction {
   local         String
   tipoCategoria String?
   data          String
-  telegram_id   Int
+  telegram_id   String
   nome_usuario  String
   registrado_em DateTime @default(now())
 }
