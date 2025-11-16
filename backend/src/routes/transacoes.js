@@ -47,4 +47,20 @@ router.post("/add-transactions", async (req, res) => {
   }
 });
 
+router.delete("/delete-transactions/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const deletedTransaction = await prisma.transaction.delete({
+      where: { id }, // já é string
+    });
+
+    return res.status(200).json({ message: "Transação deletada com sucesso", deletedTransaction });
+
+  } catch (error) {
+    console.error("Erro ao deletar:", error);
+    return res.status(500).json({ error: "Erro ao deletar transação" });
+  }
+});
+
 module.exports = router;
